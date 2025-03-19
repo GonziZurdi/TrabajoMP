@@ -1,4 +1,4 @@
-package GameManager.game;
+package GameManager;
 
 public class Ranking {
     

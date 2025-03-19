@@ -1,4 +1,4 @@
-package GameManager.dataBase;
+package GameManager;
 
 public class Adapter {
     

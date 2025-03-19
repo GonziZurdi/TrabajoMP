@@ -1,4 +1,4 @@
-package GameManager.user;
+package GameManager;
 
 public class User {
     

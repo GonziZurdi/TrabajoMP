@@ -1,0 +1,1 @@
+HunterFactory, VampireFactory y LycanthropeFactory pasa a CharacterFactory

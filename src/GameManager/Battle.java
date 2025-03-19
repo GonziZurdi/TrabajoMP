@@ -1,4 +1,4 @@
-package GameManager.battle;
+package GameManager;
 
 public class Battle {
     

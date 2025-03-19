@@ -1,4 +1,4 @@
-package GameManager.system;
+package GameManager;
 
 public class System {
     

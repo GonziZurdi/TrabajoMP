@@ -1,4 +1,4 @@
-package GameManager.profile;
+package GameManager;
 
 public class Profile {
     
