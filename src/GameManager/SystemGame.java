@@ -1,5 +1,5 @@
 package GameManager;
 
-public class System {
+public class SystemGame {
     
 }
