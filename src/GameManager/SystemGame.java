@@ -5,12 +5,18 @@ import java.util.Scanner;
 import java.util.HashMap;
 
 public class SystemGame {
-    private Map<User> userList;
-    private Adapter adapter;
+    private Map<String, User> userList;
+    private XMLAdapter adapter;
+    private static SystemGame instance = null;
     private String adminCode = "admin";
-    public static System getInstanceOfSystemGame() {
+    private SystemGame(){
+        adapter = new XMLAdapter();
+        this.userList = adapter.loadData();
+        showStartScreen();
+    }
+    public static SystemGame getInstanceOfSystemGame() {
         if (instance == null) {
-            instance = new System();
+            instance = new SystemGame();
         }
         return instance;
     }
@@ -22,14 +28,14 @@ public class SystemGame {
             }
         }
         return null;
-        }
+    }
     public User getUser(String userCode) {
         return userList.get(userCode);
     }
     public String newPlayer(String userName, String password) {
         Credentials c = new Credentials(userName, password);
-        if (credentials.isValid()) {
-            String userCode = credentials.getUserCode();
+        if (c.isValid()) {
+            String userCode = c.getUserCode();
             userList.put(userCode, new Player(userName, password));
             return userCode;
         } else {
@@ -58,7 +64,7 @@ public class SystemGame {
                     showNewAdminScreen();
                     break;
                 case 4:
-                    System.exit(0);
+                    adapter.saveData(userList);
                     break;
                 default:
                     System.out.println("Opción no válida. Inténtalo de nuevo.");
@@ -70,7 +76,7 @@ public class SystemGame {
         System.out.println("Escribe tu código de usuario (si no te acuerdas escribe -1): ");
         Scanner scanner = new Scanner(System.in);
         String userCode = scanner.nextLine();
-        if (userCode == "-1"){
+        if (userCode.equals("-1")){
             System.out.println("Escribe tu nombre de usuario");
             String userName = scanner.nextLine();
             System.out.println("Escribe tu contraseña");
@@ -84,8 +90,8 @@ public class SystemGame {
                 System.out.println("Usuario no válido.");
                 showLoginScreen();
             }
-            }
-        } 
+        }
+        
         else {
             User user = getUser(userCode);
             if (user != null) {
@@ -102,13 +108,13 @@ public class SystemGame {
     }
     public void showNewUserScreen(){
         limpiarConsola();
-        System.out.println("Escribe el nombre de usuario que quieras usar:")
+        System.out.println("Escribe el nombre de usuario que quieras usar:");
         Scanner scanner = new Scanner(System.in);
         String userName = scanner.nextLine();
         System.out.println("Escribe la contraseña que quieras usar:");
         String password = scanner.nextLine();
         String validation = newPlayer(userName, password);
-        if (validation == "-1"){
+        if (validation.equals("-1")){
             System.out.println("Hay algun fallo en la contraseña o el nombre. Prueba otro");
 
         } else {
@@ -137,6 +143,15 @@ public class SystemGame {
             showStartScreen();
     }
             
+    }
+    public String newAdmin(String userName, String password) {
+        Credentials c = new Credentials(userName, password);
+        if (credentials.isValid()) {
+            String userCode = credentials.getUserCode();
+            userList.put(userCode, new Admin(userName, password));
+            return userCode;
+        } else {
+            return "-1";
         }
     }
     public static void limpiarConsola() {
@@ -147,3 +162,4 @@ public class SystemGame {
         }
     }
 }
+
