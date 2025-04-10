@@ -1,8 +1,9 @@
 package GameManager;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public interface Adapter {
-    void saveData(Map<String, User> data);
+    void saveData(LinkedHashMap<String, User> data);
     Map<String, User> loadData();
 }

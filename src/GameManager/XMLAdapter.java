@@ -5,10 +5,11 @@ import java.beans.XMLEncoder;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class XMLAdapter implements Adapter {
-    public void saveData(Map<String, User> userList) {
+    public void saveData(LinkedHashMap<String, User> userList) {
         try {
             XMLEncoder encoder = new XMLEncoder(new FileOutputStream("userList.xml"));
             encoder.writeObject(userList);
@@ -17,10 +18,10 @@ public class XMLAdapter implements Adapter {
             e.printStackTrace();
         }
     }
-    public Map<String, User> loadData() {
+    public LinkedHashMap<String, User> loadData() {
         try {
             XMLDecoder decoder = new XMLDecoder(new FileInputStream("userList.xml"));
-            Map<String, User> userList = (Map<String, User>) decoder.readObject();
+            LinkedHashMap<String, User> userList = (LinkedHashMap<String, User>) decoder.readObject();
             decoder.close();
             return userList;
         }

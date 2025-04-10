@@ -3,12 +3,14 @@ package GameManager;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.HashMap;
-
+import java.util.LinkedHashMap;
+//cambia todo en funcion de Credential
 public class SystemGame {
-    private Map<String, User> userList;
+    private LinkedHashMap<String, User> userList;
     private XMLAdapter adapter;
     private static SystemGame instance = null;
     private String adminCode = "admin";
+    private Credentials credentials= new Credentials(this, adminCode, adminCode);
     private SystemGame(){
         adapter = new XMLAdapter();
         this.userList = adapter.loadData();
@@ -147,6 +149,7 @@ public class SystemGame {
     public String newAdmin(String userName, String password) {
         Credentials c = new Credentials(userName, password);
         if (credentials.isValid()) {
+            String newCode = c.getUserCode();
             String userCode = credentials.getUserCode();
             userList.put(userCode, new Admin(userName, password));
             return userCode;
@@ -160,6 +163,9 @@ public class SystemGame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public LinkedHashMap<String, User> getUserList() {
+        return userList;
     }
 }
 
